@@ -1,0 +1,7 @@
+
+site_name: Adaptive Causal Digital Twin
+nav:
+  - Home: index.md
+  - Quickstart: quickstart.md
+theme:
+  name: material

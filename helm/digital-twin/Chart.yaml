@@ -1,0 +1,6 @@
+
+apiVersion: v2
+name: digital-twin
+description: Helm chart for Adaptive Causal Digital Twin
+version: 0.1.0
+appVersion: "1.0.0"

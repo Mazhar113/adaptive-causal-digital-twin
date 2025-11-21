@@ -1,0 +1,7 @@
+
+{
+  "name": "Adaptive Digital Twin",
+  "image": "mcr.microsoft.com/vscode/devcontainers/python:0-3.11",
+  "features": {},
+  "postCreateCommand": "pip install -r backend/requirements.txt"
+}

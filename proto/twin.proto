@@ -1,0 +1,25 @@
+
+syntax = "proto3";
+package twin;
+service Twin {
+  rpc Predict (PredictRequest) returns (PredictResponse);
+  rpc Simulate (SimRequest) returns (SimResponse);
+}
+message PredictRequest {
+  map<string, double> features = 1;
+}
+message PredictResponse {
+  double prediction = 1;
+}
+message SimRequest {
+  map<string, double> initial_state = 1;
+  map<string, double> policy = 2;
+  int32 days = 3;
+}
+message SimResponse {
+  repeated SimDay history = 1;
+}
+message SimDay {
+  int32 day = 1;
+  map<string, double> state = 2;
+}

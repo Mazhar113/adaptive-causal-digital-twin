@@ -1,0 +1,73 @@
+
+version: "3.8"
+services:
+  zookeeper:
+    image: bitnami/zookeeper:3
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+    ports:
+      - "2181:2181"
+
+  kafka:
+    image: bitnami/kafka:3
+    environment:
+      - KAFKA_BROKER_ID=1
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_LISTENERS=PLAINTEXT://:9092
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
+      - ALLOW_PLAINTEXT_LISTENER=yes
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: twin
+      POSTGRES_PASSWORD: twinpass
+      POSTGRES_DB: twin_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.full
+    depends_on:
+      - kafka
+      - db
+    environment:
+      - DATABASE_URL=postgresql://twin:twinpass@db:5432/twin_db
+      - KAFKA_BOOTSTRAP=kafka:9092
+    ports:
+      - "8000:8000"
+      - "8888:8888"
+    volumes:
+      - ./backend:/app
+
+  worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.full
+    depends_on:
+      - kafka
+      - db
+    environment:
+      - DATABASE_URL=postgresql://twin:twinpass@db:5432/twin_db
+      - KAFKA_BOOTSTRAP=kafka:9092
+    volumes:
+      - ./backend:/app
+    command: ["python","-u","app/worker.py"]
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/usr/src/app
+
+volumes:
+  db_data:

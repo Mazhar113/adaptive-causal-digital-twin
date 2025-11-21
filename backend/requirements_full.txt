@@ -1,0 +1,26 @@
+
+# Full heavy deps - WARNING: large install
+fastapi
+uvicorn[standard]
+sqlalchemy
+psycopg2-binary
+pandas
+numpy
+scikit-learn
+networkx
+joblib
+pydantic
+python-dotenv
+requests
+aiokafka
+simpy
+jupyterlab
+dowhy
+econml
+torch
+stable-baselines3
+gym
+matplotlib
+seaborn
+pytest
+pytest-asyncio

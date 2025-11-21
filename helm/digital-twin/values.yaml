@@ -1,0 +1,9 @@
+
+replicaCount: 1
+image:
+  repository: ghcr.io/YOUR_USERNAME/digital-twin
+  tag: slim
+  pullPolicy: IfNotPresent
+service:
+  type: ClusterIP
+  port: 8000
