@@ -63,5 +63,5 @@ Unlike traditional digital twins that only *predict*, this twin can also **under
 
 ---
 
-## 🏗 Architecture
+
 
